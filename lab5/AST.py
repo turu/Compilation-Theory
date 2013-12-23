@@ -125,42 +125,51 @@ class LabeledInstruction(Node):
         self.id = id
         self.instr = instr
 
+
 class Assignment(Node):
     def __init__(self, id, expr):
         self.id = id
         self.expr = expr
-        
-class ChoiceInstruction(Node):
-    def __init__(self, ifclause, thenclause, elseclause=None):
-        self.ifclause = ifclause
-        self.thenclause = thenclause
-        self.elseclause = elseclause
 
-class WhileInstruction(Node):
-    def __init__(self, condition, instruction):
-        self.condition = condition
-        self.instruction = instruction
-        
-class RepeatInstruction(Node):
-    def __init__(self, instructions, condition):
-        self.instructions = instructions
-        self.condition = condition
-        
-class ReturnInstruction(Node):
-    def __init__(self, expression):
-        self.expression = expression
-        
-class ContinueInstruction(Node):
-    pass
-    
-class BreakInstruction(Node):
-    pass
 
 class CompoundInstruction(Node):
     def __init__(self, declarations, instructions):
         self.declarations = declarations
         self.instructions = instructions
-            
+
+
+class ChoiceInstruction(Node):
+    def __init__(self, condition, action, alternateAction=None):
+        self.condition = condition
+        self.action = action
+        self.alternateAction = alternateAction
+
+
+class WhileInstruction(Node):
+    def __init__(self, condition, instruction):
+        self.condition = condition
+        self.instruction = instruction
+
+
+class RepeatInstruction(Node):
+    def __init__(self, instructions, condition):
+        self.instructions = instructions
+        self.condition = condition
+
+
+class ReturnInstruction(Node):
+    def __init__(self, expression):
+        self.expression = expression
+
+
+class BreakInstruction(Node):
+    pass
+
+
+class ContinueInstruction(Node):
+    pass
+
+
 class Program(Node):
     def __init__(self, declarations, fundefs, instructions):
         self.declarations = declarations
