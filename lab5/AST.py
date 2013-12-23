@@ -51,17 +51,17 @@ class InvocationExpression(Node):
 
    
 class Argument(Node):
-    def __init__(self, type, id):
+    def __init__(self, type, name):
         self.type = type
-        self.id = id
+        self.name = name
 
 
 class ArgumentList(Node):
     def __init__(self):
-        self.args = []
+        self.argList = []
         
     def addArgument(self, arg):
-        self.args.append(arg)
+        self.argList.append(arg)
 
 
 class FunctionExpression(Node):

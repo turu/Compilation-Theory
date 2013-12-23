@@ -42,11 +42,11 @@ class TreePrinter:
         
     @addToClass(AST.Argument)
     def printTree(self, level=0):
-        return INDENT_TOKEN * level + "ARG " + self.id + "\n"
+        return INDENT_TOKEN * level + "ARG " + self.name + "\n"
 
     @addToClass(AST.ArgumentList)
     def printTree(self,level=0):
-        return "".join(map(lambda x: x.printTree(level), self.args))
+        return "".join(map(lambda x: x.printTree(level), self.argList))
             
     @addToClass(AST.FunctionExpressionList)
     def printTree(self, level=0):
