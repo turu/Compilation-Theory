@@ -76,10 +76,10 @@ class Cparser(object):
                         | instruction """
         if len(p) == 3:
             p[0] = AST.InstructionList() if p[1] is None else p[1]
-            p[0].addInstr(p[2])
+            p[0].addInstruction(p[2])
         else:
             p[0] = AST.InstructionList()
-            p[0].addInstr(p[1])
+            p[0].addInstruction(p[1])
     
     def p_instruction(self, p):
         """instruction : print_instr
@@ -213,7 +213,7 @@ class Cparser(object):
                    |  """
         if len(p) == 3:
             p[0] = p[2]
-            p[0].addDef(p[1])
+            p[0].addFunction(p[1])
         else:
             p[0] = AST.FunctionExpressionList()
 

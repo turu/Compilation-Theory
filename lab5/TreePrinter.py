@@ -33,12 +33,12 @@ class TreePrinter:
     @addToClass(AST.InvocationExpression)
     def printTree(self, level=0):
         return INDENT_TOKEN * level + "FUNCALL\n" + \
-        INDENT_TOKEN * (level+1) + self.name.__str__() + "\n" + \
+        INDENT_TOKEN * (level+1) + str(self.name) + "\n" + \
         self.args.printTree(level+1)
         
     @addToClass(AST.Const)
     def printTree(self, level=0):
-        return INDENT_TOKEN * level + self.value.__str__() + "\n"
+        return INDENT_TOKEN * level + str(self.value) + "\n"
         
     @addToClass(AST.Argument)
     def printTree(self, level=0):
@@ -55,8 +55,8 @@ class TreePrinter:
     @addToClass(AST.FunctionExpression)
     def printTree(self, level=0):
         return INDENT_TOKEN * level + "FUNDEF\n" + \
-        INDENT_TOKEN * (level+1) + self.name.__str__() + "\n" + \
-        INDENT_TOKEN * (level+1) + "RET " + self.retType.__str__() + "\n" + \
+        INDENT_TOKEN * (level+1) + str(self.name) + "\n" + \
+        INDENT_TOKEN * (level+1) + "RET " + str(self.retType) + "\n" + \
         self.args.printTree(level+1) + \
         self.body.printTree(level)
          
@@ -75,7 +75,7 @@ class TreePrinter:
     @addToClass(AST.Init)
     def printTree(self, level=0):
         return INDENT_TOKEN*level + "=\n" +\
-        INDENT_TOKEN*(level+1) + self.id.__str__() + "\n" + \
+        INDENT_TOKEN*(level+1) + str(self.name) + "\n" + \
         self.expr.printTree(level+1)
         
     @addToClass(AST.InstructionList)
@@ -89,13 +89,13 @@ class TreePrinter:
     @addToClass(AST.LabeledInstr)
     def printTree(self, level=0):
         return INDENT_TOKEN * level + "LABEL\n" +\
-        INDENT_TOKEN*(level+1) + self.id.__str__() + "\n" + \
+        INDENT_TOKEN*(level+1) + str(self.id) + "\n" + \
         self.instr.printTree(level+1)
         
     @addToClass(AST.Assignment)
     def printTree(self, level=0):
         return INDENT_TOKEN*level + "=\n" +\
-        INDENT_TOKEN*(level+1) + self.id.__str__() + "\n" + \
+        INDENT_TOKEN*(level+1) + str(self.id) + "\n" + \
         self.expr.printTree(level+1)
         
     @addToClass(AST.ChoiceInstr)

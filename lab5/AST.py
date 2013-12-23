@@ -43,6 +43,35 @@ class GroupedExpression(Node):
     def __init__(self, interior):
         self.interior = interior
 
+class FunctionExpression(Node):
+    def __init__(self, retType, name, args, body):
+        self.retType = retType
+        self.name = name
+        self.args = args
+        self.body = body
+
+
+class FunctionExpressionList(Node):
+    def __init__(self):
+        self.fundefs = []
+
+    def addFunction(self, fundef):
+        self.fundefs.append(fundef)
+
+
+class DeclarationList(Node):
+    def __init__(self):
+        self.declarations = []
+
+    def addDeclaration(self, declaration):
+        self.declarations.append(declaration)
+
+
+class Declaration(Node):
+    def __init__(self, type, inits):
+        self.type = type
+        self.inits = inits
+
 
 class InvocationExpression(Node):
     def __init__(self, name, args):
@@ -64,36 +93,6 @@ class ArgumentList(Node):
         self.argList.append(arg)
 
 
-class FunctionExpression(Node):
-    def __init__(self, retType, name, args, body):
-        self.retType = retType
-        self.name = name
-        self.args = args
-        self.body = body
-
-
-class FunctionExpressionList(Node):
-    def __init__(self):
-        self.fundefs = []
-
-    def addDef(self, fundef):
-        self.fundefs.append(fundef)
-
-
-class DeclarationList(Node):
-    def __init__(self):
-        self.declarations = []
-        
-    def addDeclaration(self, decl):
-        self.declarations.append(decl)
-
-
-class Declaration(Node):
-    def __init__(self, type, inits):
-        self.type = type
-        self.inits = inits
-
-
 class InitList(Node):
     def __init__(self):
         self.inits = []
@@ -103,8 +102,8 @@ class InitList(Node):
 
 
 class Init(Node):
-    def __init__(self, id, expr):
-        self.id = id
+    def __init__(self, name, expr):
+        self.name = name
         self.expr = expr
 
 
@@ -112,7 +111,7 @@ class InstructionList(Node):
     def __init__(self):
         self.instructions = []
     
-    def addInstr(self, instr):
+    def addInstruction(self, instr):
         self.instructions.append(instr)
 
 
