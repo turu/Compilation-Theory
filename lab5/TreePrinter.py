@@ -48,7 +48,7 @@ class TreePrinter:
     def printTree(self,level=0):
         return "".join(map(lambda x: x.printTree(level), self.args))
             
-    @addToClass(AST.FunDefList)
+    @addToClass(AST.FunctionExpressionList)
     def printTree(self, level=0):
         return "".join(map(lambda x: x.printTree(level), self.fundefs))
     

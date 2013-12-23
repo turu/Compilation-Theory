@@ -72,7 +72,7 @@ class FunctionExpression(Node):
         self.comp_instrs = comp_instrs
 
 
-class FunDefList(Node):
+class FunctionExpressionList(Node):
     def __init__(self):
         self.fundefs = []
 
@@ -86,23 +86,27 @@ class DeclarationList(Node):
         
     def addDeclaration(self, decl):
         self.declarations.append(decl)
-        
+
+
 class Declaration(Node):
     def __init__(self, type, inits):
         self.type = type
         self.inits = inits
-        
+
+
 class InitList(Node):
     def __init__(self):
         self.inits = []
         
     def addInit(self, init):
         self.inits.append(init)
-        
+
+
 class Init(Node):
     def __init__(self, id, expr):
         self.id = id
         self.expr = expr
+
 
 class InstructionList(Node):
     def __init__(self):
@@ -110,51 +114,50 @@ class InstructionList(Node):
     
     def addInstr(self, instr):
         self.instructions.append(instr)
-        
-class Instruction(Node):
-    pass
-    
-class PrintInstr(Instruction):
+
+
+class PrintInstr(Node):
     def __init__(self, expr):
         self.expr = expr
-        
-class LabeledInstr(Instruction):
+
+
+class LabeledInstr(Node):
     def __init__(self, id, instr):
         self.id = id
         self.instr = instr
 
-class Assignment(Instruction):
+class Assignment(Node):
     def __init__(self, id, expr):
         self.id = id
         self.expr = expr
         
-class ChoiceInstr(Instruction):
+class ChoiceInstr(Node):
     def __init__(self, ifclause, thenclause, elseclause=None):
         self.ifclause = ifclause
         self.thenclause = thenclause
         self.elseclause = elseclause
 
-class WhileInstr(Instruction):
+class WhileInstr(Node):
     def __init__(self, condition, instruction):
         self.condition = condition
         self.instruction = instruction
         
-class RepeatInstr(Instruction):
+class RepeatInstr(Node):
     def __init__(self, instructions, condition):
         self.instructions = instructions
         self.condition = condition
         
-class ReturnInstr(Instruction):
+class ReturnInstr(Node):
     def __init__(self, expression):
         self.expression = expression
         
-class ContinueInstr(Instruction):
+class ContinueInstr(Node):
     pass
     
-class BreakInstr(Instruction):
+class BreakInstr(Node):
     pass
 
-class CompoundInstr(Instruction):
+class CompoundInstr(Node):
     def __init__(self, declarations, instructions):
         self.declarations = declarations
         self.instructions = instructions
