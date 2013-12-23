@@ -1,0 +1,33 @@
+
+DIGIT		[0-9]
+COR_TIME	(([0-1]{DIGIT})|2[0-4]):([0-5]{DIGIT}):([0-5]{DIGIT})\.{DIGIT}{6}
+INC_TIME	{DIGIT}{2}:{DIGIT}{2}:{DIGIT}{2}
+IP		({DIGIT}{1,3}\.){4}
+PORT		{DIGIT}{1,5}
+
+%%
+
+{COR_TIME}	{
+		yytext[8] = '\0';
+		printf("%s ", yytext);
+		}
+{INC_TIME}	printf("%s", yytext);
+IP		printf("from");
+{IP}		printf("%s", yytext);
+.{PORT}		printf("");
+>		printf("to", yytext);
+
+%%
+
+int main(int argc, char ** argv) {
+	++argv, --argc;
+	if (argc > 0) {
+		yyin = fopen(argv[0], "r");
+	} else {
+		yyin = stdin;
+	}
+
+	yylex();
+
+	return 0;
+}

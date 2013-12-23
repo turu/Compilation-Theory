@@ -1,0 +1,29 @@
+/* example.y - bardzo prosty parser */
+
+/* wszystkie nazwy tokenów mające więcej niż jeden znak muszą być zadeklarowane */
+%token LETTER  
+
+%%
+
+/* gdy na wejściu pojawi sie symbol terminalny NUM zostanie wywołana poniższa akcja */
+
+input: LETTER { printf("rozpoznano -%c\n", $1); };
+
+/* do przekazywania wartości semantycznych pomiędzy regułami służą tzw. pseudozmienne;
+   akcja moze zwrócić wartość przez podstawienia pseudozmiennej $$;
+      pseudozmiennej $1 użyto w przykładzie, aby wypisać wartość tokenu NUM */
+
+      %%
+
+      int main() {
+
+	        /* aby rozpocząć parsing trzeba wywołać funkcję yyparse */ 
+		  yyparse(); 
+      }
+
+      /* gdy funkcja yyparse wykryje błąd wywołuje funkcję yyerror */
+      int yyerror(char *s) {
+
+	         printf("blad: %s\n", s); 
+      }
+

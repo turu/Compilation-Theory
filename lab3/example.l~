@@ -1,0 +1,12 @@
+/* example.l - skaner współpracujący z parserem example.y */
+
+/* zmienna globalna yylval służy do przekazywania parserowi atrybutu tokenu 
+   (wartości semantycznej); zmienna yylval powinna być typu YYSTYPE */
+%%
+   -[abc]        { yylval = yytext[1]; return LETTER; }
+
+   /* po dopasowaniu ciągu wejściowego do yylval podstawiamy znak znajdujący sie po -,
+      funkcja yylex kończy swoje działanie i zwraca numer dopasowanego tokenu */
+
+   .|\n        ;
+
