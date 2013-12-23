@@ -3,8 +3,6 @@ class Node(object):
         return self.printTree()
 
 
-
-
 class Expression(Node):
     pass
 
@@ -27,12 +25,14 @@ class BinExpr(Expression):
 class GroupingExpr(Expression):
     def __init__(self, inside):
         self.inside = inside
-        
+
+
 class FunCallExpr(Expression):
     def __init__(self, id, inside):
         self.id = id
         self.inside = inside
-        
+
+
 class Const(Expression):
     def __init__(self, value):
         self.value = value
