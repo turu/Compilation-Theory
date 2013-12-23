@@ -115,12 +115,12 @@ class InstructionList(Node):
         self.instructions.append(instr)
 
 
-class PrintInstr(Node):
+class PrintInstruction(Node):
     def __init__(self, expr):
         self.expr = expr
 
 
-class LabeledInstr(Node):
+class LabeledInstruction(Node):
     def __init__(self, id, instr):
         self.id = id
         self.instr = instr
@@ -130,33 +130,33 @@ class Assignment(Node):
         self.id = id
         self.expr = expr
         
-class ChoiceInstr(Node):
+class ChoiceInstruction(Node):
     def __init__(self, ifclause, thenclause, elseclause=None):
         self.ifclause = ifclause
         self.thenclause = thenclause
         self.elseclause = elseclause
 
-class WhileInstr(Node):
+class WhileInstruction(Node):
     def __init__(self, condition, instruction):
         self.condition = condition
         self.instruction = instruction
         
-class RepeatInstr(Node):
+class RepeatInstruction(Node):
     def __init__(self, instructions, condition):
         self.instructions = instructions
         self.condition = condition
         
-class ReturnInstr(Node):
+class ReturnInstruction(Node):
     def __init__(self, expression):
         self.expression = expression
         
-class ContinueInstr(Node):
+class ContinueInstruction(Node):
     pass
     
-class BreakInstr(Node):
+class BreakInstruction(Node):
     pass
 
-class CompoundInstr(Node):
+class CompoundInstruction(Node):
     def __init__(self, declarations, instructions):
         self.declarations = declarations
         self.instructions = instructions

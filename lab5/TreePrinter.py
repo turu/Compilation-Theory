@@ -82,11 +82,11 @@ class TreePrinter:
     def printTree(self, level=0):
         return "".join(map(lambda x: x.printTree(level), self.instructions))
         
-    @addToClass(AST.PrintInstr)
+    @addToClass(AST.PrintInstruction)
     def printTree(self, level=0):
         return INDENT_TOKEN * level + "PRINT\n" + self.expr.printTree(level+1)
     
-    @addToClass(AST.LabeledInstr)
+    @addToClass(AST.LabeledInstruction)
     def printTree(self, level=0):
         return INDENT_TOKEN * level + "LABEL\n" +\
         INDENT_TOKEN*(level+1) + str(self.id) + "\n" + \
@@ -98,7 +98,7 @@ class TreePrinter:
         INDENT_TOKEN*(level+1) + str(self.id) + "\n" + \
         self.expr.printTree(level+1)
         
-    @addToClass(AST.ChoiceInstr)
+    @addToClass(AST.ChoiceInstruction)
     def printTree(self, level=0):
         elsestr =  "" if self.elseclause is None else \
         INDENT_TOKEN*level + "ELSE\n" + self.elseclause.printTree(level+1)
@@ -108,32 +108,32 @@ class TreePrinter:
         self.thenclause.printTree(level+1) + \
         elsestr
         
-    @addToClass(AST.WhileInstr)
+    @addToClass(AST.WhileInstruction)
     def printTree(self, level=0):
         return INDENT_TOKEN*level + "WHILE\n" +\
         self.condition.printTree(level+1) + \
         self.instruction.printTree(level)
         
-    @addToClass(AST.RepeatInstr)
+    @addToClass(AST.RepeatInstruction)
     def printTree(self, level=0):
         return INDENT_TOKEN*level + "REPEAT\n" +\
         self.instructions.printTree(level+1) + \
         INDENT_TOKEN*level + "UNTIL\n" +\
         self.condition.printTree(level+1)
         
-    @addToClass(AST.ReturnInstr)
+    @addToClass(AST.ReturnInstruction)
     def printTree(self, level=0):
         return INDENT_TOKEN * level + "RETURN\n" + self.expression.printTree(level+1)
        
-    @addToClass(AST.ContinueInstr)
+    @addToClass(AST.ContinueInstruction)
     def printTree(self, level=0):
         return INDENT_TOKEN*level + "CONTINUE\n"
         
-    @addToClass(AST.BreakInstr)
+    @addToClass(AST.BreakInstruction)
     def printTree(self, level=0):
         return INDENT_TOKEN*level + "BREAK\n"
             
-    @addToClass(AST.CompoundInstr)
+    @addToClass(AST.CompoundInstruction)
     def printTree(self, level=0):
         declstr = "" if self.declarations is None else self.declarations.printTree(level+1)
         return declstr + \

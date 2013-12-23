@@ -97,11 +97,11 @@ class Cparser(object):
     def p_print_instr(self, p):
         """print_instr : PRINT expression ';'
                        | PRINT error ';' """
-        p[0] = AST.PrintInstr(p[2])
+        p[0] = AST.PrintInstruction(p[2])
     
     def p_labeled_instr(self, p):
         """labeled_instr : ID ':' instruction """
-        p[0] = AST.LabeledInstr(p[1], p[3])
+        p[0] = AST.LabeledInstruction(p[1], p[3])
         
     def p_assignment(self, p):
         """assignment : ID '=' expression ';' """
@@ -113,37 +113,37 @@ class Cparser(object):
                         | IF '(' error ')' instruction  %prec IFX
                         | IF '(' error ')' instruction ELSE instruction """
         if len(p) == 8:
-            p[0] = AST.ChoiceInstr(p[3], p[5], p[7])
+            p[0] = AST.ChoiceInstruction(p[3], p[5], p[7])
         else:
-            p[0] = AST.ChoiceInstr(p[3], p[5])
+            p[0] = AST.ChoiceInstruction(p[3], p[5])
     
     def p_while_instr(self, p):
         """while_instr : WHILE '(' condition ')' instruction
                        | WHILE '(' error ')' instruction """
-        p[0] = AST.WhileInstr(p[3], p[5])
+        p[0] = AST.WhileInstruction(p[3], p[5])
 
     def p_repeat_instr(self, p):
         """repeat_instr : REPEAT instructions UNTIL condition ';' """
-        p[0] = AST.RepeatInstr(p[2], p[4])
+        p[0] = AST.RepeatInstruction(p[2], p[4])
     
     def p_return_instr(self, p):
         """return_instr : RETURN expression ';' """
-        p[0] = AST.ReturnInstr(p[2])
+        p[0] = AST.ReturnInstruction(p[2])
     
     def p_continue_instr(self, p):
         """continue_instr : CONTINUE ';' """
-        p[0] =AST.ContinueInstr()
+        p[0] =AST.ContinueInstruction()
     
     def p_break_instr(self, p):
         """break_instr : BREAK ';' """
-        p[0] = AST.BreakInstr()
+        p[0] = AST.BreakInstruction()
  
     def p_compound_instr(self, p):
         """compound_instr : '{' declarations instructions '}' """
         if len(p[2].declarations)==0:
-            p[0] = AST.CompoundInstr(None, p[3])
+            p[0] = AST.CompoundInstruction(None, p[3])
         else:
-            p[0] = AST.CompoundInstr(p[2], p[3])
+            p[0] = AST.CompoundInstruction(p[2], p[3])
         
     def p_condition(self, p):
         """condition : expression"""
