@@ -1,5 +1,6 @@
-
 import AST
+
+INDENT_TOKEN = "| "
 
 
 def addToClass(cls):
@@ -21,27 +22,27 @@ class TreePrinter:
         
     @addToClass(AST.BinExpr)
     def printTree(self, level=0):
-        return "|" * level + self.op + "\n" + \
+        return INDENT_TOKEN * level + self.op + "\n" + \
         self.lhs.printTree(level+1) + \
         self.rhs.printTree(level+1)
-    
+
     @addToClass(AST.GroupingExpr)
     def printTree(self, level=0):
         return self.inside.printTree(level)
         
-    @addToClass(AST.FunCallExpr)
+    @addToClass(AST.InvocationExpression)
     def printTree(self, level=0):
-        return "|" * level + "FUNCALL\n" + \
-        "|" * (level+1) + self.id.__str__() + "\n" + \
+        return INDENT_TOKEN * level + "FUNCALL\n" + \
+        INDENT_TOKEN * (level+1) + self.id.__str__() + "\n" + \
         self.inside.printTree(level+1)
         
     @addToClass(AST.Const)
     def printTree(self, level=0):
-        return "|" * level + self.value.__str__() + "\n"
+        return INDENT_TOKEN * level + self.value.__str__() + "\n"
         
     @addToClass(AST.Argument)
     def printTree(self, level=0):
-        return "|" * level + "ARG " + self.id + "\n"
+        return INDENT_TOKEN * level + "ARG " + self.id + "\n"
 
     @addToClass(AST.ArgumentList)
     def printTree(self,level=0):
@@ -53,15 +54,15 @@ class TreePrinter:
     
     @addToClass(AST.FunDef)
     def printTree(self, level=0):
-        return "|" * level + "FUNDEF\n" + \
-        "|" * (level+1) + self.id.__str__() + "\n" + \
-        "|" * (level+1) + "RET " + self.type.__str__() + "\n" + \
+        return INDENT_TOKEN * level + "FUNDEF\n" + \
+        INDENT_TOKEN * (level+1) + self.id.__str__() + "\n" + \
+        INDENT_TOKEN * (level+1) + "RET " + self.type.__str__() + "\n" + \
         self.args.printTree(level+1) + \
         self.comp_instrs.printTree(level)
          
     @addToClass(AST.DeclarationList)
     def printTree(self, level=0):
-        return "|"*level + "DECL\n" + "".join(map(lambda x: x.printTree(level+1), self.declarations))
+        return INDENT_TOKEN*level + "DECL\n" + "".join(map(lambda x: x.printTree(level+1), self.declarations))
         
     @addToClass(AST.Declaration)
     def printTree(self, level=0):
@@ -73,8 +74,8 @@ class TreePrinter:
         
     @addToClass(AST.Init)
     def printTree(self, level=0):
-        return "|"*level + "=\n" +\
-        "|"*(level+1) + self.id.__str__() + "\n" + \
+        return INDENT_TOKEN*level + "=\n" +\
+        INDENT_TOKEN*(level+1) + self.id.__str__() + "\n" + \
         self.expr.printTree(level+1)
         
     @addToClass(AST.InstructionList)
@@ -83,54 +84,54 @@ class TreePrinter:
         
     @addToClass(AST.PrintInstr)
     def printTree(self, level=0):
-        return "|" * level + "PRINT\n" + self.expr.printTree(level+1)
+        return INDENT_TOKEN * level + "PRINT\n" + self.expr.printTree(level+1)
     
     @addToClass(AST.LabeledInstr)
     def printTree(self, level=0):
-        return "|" * level + "LABEL\n" +\
-        "|"*(level+1) + self.id.__str__() + "\n" + \
+        return INDENT_TOKEN * level + "LABEL\n" +\
+        INDENT_TOKEN*(level+1) + self.id.__str__() + "\n" + \
         self.instr.printTree(level+1)
         
     @addToClass(AST.Assignment)
     def printTree(self, level=0):
-        return "|"*level + "=\n" +\
-        "|"*(level+1) + self.id.__str__() + "\n" + \
+        return INDENT_TOKEN*level + "=\n" +\
+        INDENT_TOKEN*(level+1) + self.id.__str__() + "\n" + \
         self.expr.printTree(level+1)
         
     @addToClass(AST.ChoiceInstr)
     def printTree(self, level=0):
         elsestr =  "" if self.elseclause is None else \
-        "|"*level + "ELSE\n" + self.elseclause.printTree(level+1)
+        INDENT_TOKEN*level + "ELSE\n" + self.elseclause.printTree(level+1)
         
-        return "|"*level + "IF\n" + \
+        return INDENT_TOKEN*level + "IF\n" + \
         self.ifclause.printTree(level+1) + \
         self.thenclause.printTree(level+1) + \
         elsestr
         
     @addToClass(AST.WhileInstr)
     def printTree(self, level=0):
-        return "|"*level + "WHILE\n" +\
+        return INDENT_TOKEN*level + "WHILE\n" +\
         self.condition.printTree(level+1) + \
         self.instruction.printTree(level)
         
     @addToClass(AST.RepeatInstr)
     def printTree(self, level=0):
-        return "|"*level + "REPEAT\n" +\
+        return INDENT_TOKEN*level + "REPEAT\n" +\
         self.instructions.printTree(level+1) + \
-        "|"*level + "UNTIL\n" +\
+        INDENT_TOKEN*level + "UNTIL\n" +\
         self.condition.printTree(level+1)
         
     @addToClass(AST.ReturnInstr)
     def printTree(self, level=0):
-        return "|" * level + "RETURN\n" + self.expression.printTree(level+1)
+        return INDENT_TOKEN * level + "RETURN\n" + self.expression.printTree(level+1)
        
     @addToClass(AST.ContinueInstr)
     def printTree(self, level=0):
-        return "|"*level + "CONTINUE\n"
+        return INDENT_TOKEN*level + "CONTINUE\n"
         
     @addToClass(AST.BreakInstr)
     def printTree(self, level=0):
-        return "|"*level + "BREAK\n"
+        return INDENT_TOKEN*level + "BREAK\n"
             
     @addToClass(AST.CompoundInstr)
     def printTree(self, level=0):

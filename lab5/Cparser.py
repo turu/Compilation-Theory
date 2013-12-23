@@ -185,7 +185,7 @@ class Cparser(object):
         elif p[1]=="(":
             p[0] = AST.GroupingExpr(p[2])
         elif p[2]=="(":
-            p[0] = AST.FunCallExpr(p[1], p[3])
+            p[0] = AST.InvocationExpression(p[1], p[3])
         else:
             p[0] = AST.BinExpr(p[1], p[2], p[3])
             

@@ -3,8 +3,32 @@ class Node(object):
         return self.printTree()
 
 
-class Expression(Node):
+class Const(Node):
+    def __init__(self, value):
+        self.value = value
+
+
+class Integer(Const):
     pass
+
+
+class Float(Const):
+    pass
+
+
+class String(Const):
+    pass
+
+
+class Variable(Node):
+    pass
+
+
+class BinExpr(Node):
+    def __init__(self, lhs, op, rhs):
+        self.lhs = lhs
+        self.op = op
+        self.rhs = rhs
 
 
 class ExpressionList(Node):
@@ -15,44 +39,22 @@ class ExpressionList(Node):
         self.expressionList.append(expr)
 
 
-class BinExpr(Expression):
-    def __init__(self, lhs, op, rhs):
-        self.lhs = lhs
-        self.op = op
-        self.rhs = rhs
-
-
-class GroupingExpr(Expression):
+class GroupingExpr(Node):
     def __init__(self, inside):
         self.inside = inside
 
 
-class FunCallExpr(Expression):
+class InvocationExpression(Node):
     def __init__(self, id, inside):
         self.id = id
         self.inside = inside
 
-
-class Const(Expression):
-    def __init__(self, value):
-        self.value = value
-
-class Integer(Const):
-    pass
-
-class Float(Const):
-    pass
-
-class String(Const):
-    pass
-
-class Variable(Node):
-    pass
    
 class Argument(Node):
     def __init__(self, type, id):
         self.type = type
         self.id = id
+
 
 class ArgumentList(Node):
     def __init__(self):
@@ -60,13 +62,15 @@ class ArgumentList(Node):
         
     def addArgument(self, arg):
         self.args.append(arg)
-        
+
+
 class FunDefList(Node):
     def __init__(self):
         self.fundefs = []
         
     def addDef(self, fundef):
         self.fundefs.append(fundef)
+
 
 class FunDef(Node):
     def __init__(self, type, id, args, comp_instrs):
