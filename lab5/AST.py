@@ -1,24 +1,29 @@
-
 class Node(object):
     def __str__(self):
         return self.printTree()
-        
-class ExpressionList(Node):
-    def __init__(self):
-        self.expressions = []
-        
-    def addExpr(self, expr):
-        self.expressions.append(expr)
-        
+
+
+
+
 class Expression(Node):
     pass
 
+
+class ExpressionList(Node):
+    def __init__(self):
+        self.expressionList = []
+
+    def addExpression(self, expr):
+        self.expressionList.append(expr)
+
+
 class BinExpr(Expression):
-    def __init__(self, op, left, right):
+    def __init__(self, lhs, op, rhs):
+        self.lhs = lhs
         self.op = op
-        self.left = left
-        self.right = right
-        
+        self.rhs = rhs
+
+
 class GroupingExpr(Expression):
     def __init__(self, inside):
         self.inside = inside
@@ -74,7 +79,7 @@ class DeclarationList(Node):
     def __init__(self):
         self.declarations = []
         
-    def addDecl(self, decl):
+    def addDeclaration(self, decl):
         self.declarations.append(decl)
         
 class Declaration(Node):

@@ -44,10 +44,10 @@ class Cparser(object):
 
     def p_declarations(self, p):
         """declarations : declarations declaration
-                        | """ 
+                        | """
         if len(p) == 3:
             p[0] = AST.DeclarationList() if p[1] is None else p[1]
-            p[0].addDecl(p[2])
+            p[0].addDeclaration(p[2])
         else:
             p[0] = AST.DeclarationList()
                      
@@ -56,8 +56,6 @@ class Cparser(object):
                        | error ';' """
         if len(p) == 4:
             p[0] = AST.Declaration(p[1], p[2])
-        else:
-            pass
 
     def p_inits(self, p):
         """inits : inits ',' init
@@ -189,7 +187,7 @@ class Cparser(object):
         elif p[2]=="(":
             p[0] = AST.FunCallExpr(p[1], p[3])
         else:
-            p[0] = AST.BinExpr(p[2], p[1], p[3])
+            p[0] = AST.BinExpr(p[1], p[2], p[3])
             
     def p_expr_list_or_empty(self, p):
         """expr_list_or_empty : expr_list
@@ -204,10 +202,10 @@ class Cparser(object):
                      | expression """
         if len(p)==4:
             p[0] = AST.ExpressionList() if p[1] is None else p[1]
-            p[0].addExpr(p[3])
+            p[0].addExpression(p[3])
         else:
             p[0] = AST.ExpressionList()
-            p[0].addExpr(p[1])
+            p[0].addExpression(p[1])
     
     
     def p_fundefs(self, p):

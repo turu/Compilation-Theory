@@ -17,13 +17,13 @@ class TreePrinter:
 
     @addToClass(AST.ExpressionList)
     def printTree(self,level=0):
-        return "".join(map(lambda x: x.printTree(level+1), self.expressions))
+        return "".join(map(lambda x: x.printTree(level+1), self.expressionList))
         
     @addToClass(AST.BinExpr)
     def printTree(self, level=0):
         return "|" * level + self.op + "\n" + \
-        self.left.printTree(level+1) + \
-        self.right.printTree(level+1)
+        self.lhs.printTree(level+1) + \
+        self.rhs.printTree(level+1)
     
     @addToClass(AST.GroupingExpr)
     def printTree(self, level=0):
