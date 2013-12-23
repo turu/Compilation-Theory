@@ -55,10 +55,10 @@ class TreePrinter:
     @addToClass(AST.FunctionExpression)
     def printTree(self, level=0):
         return INDENT_TOKEN * level + "FUNDEF\n" + \
-        INDENT_TOKEN * (level+1) + self.id.__str__() + "\n" + \
-        INDENT_TOKEN * (level+1) + "RET " + self.type.__str__() + "\n" + \
+        INDENT_TOKEN * (level+1) + self.name.__str__() + "\n" + \
+        INDENT_TOKEN * (level+1) + "RET " + self.retType.__str__() + "\n" + \
         self.args.printTree(level+1) + \
-        self.comp_instrs.printTree(level)
+        self.body.printTree(level)
          
     @addToClass(AST.DeclarationList)
     def printTree(self, level=0):

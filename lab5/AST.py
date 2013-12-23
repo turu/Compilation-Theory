@@ -65,11 +65,11 @@ class ArgumentList(Node):
 
 
 class FunctionExpression(Node):
-    def __init__(self, type, id, args, comp_instrs):
-        self.type = type
-        self.id = id
+    def __init__(self, retType, name, args, body):
+        self.retType = retType
+        self.name = name
         self.args = args
-        self.comp_instrs = comp_instrs
+        self.body = body
 
 
 class FunctionExpressionList(Node):
