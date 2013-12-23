@@ -26,15 +26,15 @@ class TreePrinter:
         self.lhs.printTree(level+1) + \
         self.rhs.printTree(level+1)
 
-    @addToClass(AST.GroupingExpr)
+    @addToClass(AST.GroupedExpression)
     def printTree(self, level=0):
-        return self.inside.printTree(level)
+        return self.interior.printTree(level)
         
     @addToClass(AST.InvocationExpression)
     def printTree(self, level=0):
         return INDENT_TOKEN * level + "FUNCALL\n" + \
-        INDENT_TOKEN * (level+1) + self.id.__str__() + "\n" + \
-        self.inside.printTree(level+1)
+        INDENT_TOKEN * (level+1) + self.name.__str__() + "\n" + \
+        self.args.printTree(level+1)
         
     @addToClass(AST.Const)
     def printTree(self, level=0):

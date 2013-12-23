@@ -39,15 +39,15 @@ class ExpressionList(Node):
         self.expressionList.append(expr)
 
 
-class GroupingExpr(Node):
-    def __init__(self, inside):
-        self.inside = inside
+class GroupedExpression(Node):
+    def __init__(self, interior):
+        self.interior = interior
 
 
 class InvocationExpression(Node):
-    def __init__(self, id, inside):
-        self.id = id
-        self.inside = inside
+    def __init__(self, name, args):
+        self.name = name
+        self.args = args
 
    
 class Argument(Node):

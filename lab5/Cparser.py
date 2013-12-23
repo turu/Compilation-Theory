@@ -183,7 +183,7 @@ class Cparser(object):
         if len(p)==2:
             p[0] = AST.Const(p[1])
         elif p[1]=="(":
-            p[0] = AST.GroupingExpr(p[2])
+            p[0] = AST.GroupedExpression(p[2])
         elif p[2]=="(":
             p[0] = AST.InvocationExpression(p[1], p[3])
         else:
