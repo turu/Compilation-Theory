@@ -64,21 +64,22 @@ class ArgumentList(Node):
         self.args.append(arg)
 
 
-class FunDefList(Node):
-    def __init__(self):
-        self.fundefs = []
-        
-    def addDef(self, fundef):
-        self.fundefs.append(fundef)
-
-
-class FunDef(Node):
+class FunctionExpression(Node):
     def __init__(self, type, id, args, comp_instrs):
         self.type = type
         self.id = id
         self.args = args
         self.comp_instrs = comp_instrs
-        
+
+
+class FunDefList(Node):
+    def __init__(self):
+        self.fundefs = []
+
+    def addDef(self, fundef):
+        self.fundefs.append(fundef)
+
+
 class DeclarationList(Node):
     def __init__(self):
         self.declarations = []

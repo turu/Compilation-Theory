@@ -219,7 +219,7 @@ class Cparser(object):
 
     def p_fundef(self, p):
         """fundef : TYPE ID '(' args_list_or_empty ')' compound_instr """
-        p[0] = AST.FunDef(p[1], p[2], p[4], p[6])
+        p[0] = AST.FunctionExpression(p[1], p[2], p[4], p[6])
     
     def p_args_list_or_empty(self, p):
         """args_list_or_empty : args_list

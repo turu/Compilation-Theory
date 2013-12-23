@@ -52,7 +52,7 @@ class TreePrinter:
     def printTree(self, level=0):
         return "".join(map(lambda x: x.printTree(level), self.fundefs))
     
-    @addToClass(AST.FunDef)
+    @addToClass(AST.FunctionExpression)
     def printTree(self, level=0):
         return INDENT_TOKEN * level + "FUNDEF\n" + \
         INDENT_TOKEN * (level+1) + self.id.__str__() + "\n" + \
