@@ -10,7 +10,6 @@ class Cparser(object):
     def __init__(self):
         self.scanner = Scanner()
         self.scanner.build()
-        self.vartable = {}
 
     tokens = Scanner.tokens
 
