@@ -98,7 +98,7 @@ class TreePrinter:
     @addToClass(AST.ChoiceInstruction)
     def printTree(self, indent=0):
         return INDENT_TOKEN * indent + "IF\n" + self.condition.printTree(indent + 1) + self.action.printTree(indent + 1) + \
-            ("" if self.alternateAction is None else INDENT_TOKEN*indent + "ELSE\n" +
+            ("" if self.alternateAction is None else INDENT_TOKEN * indent + "ELSE\n" +
                 self.alternateAction.printTree(indent + 1))
 
     @addToClass(AST.WhileInstruction)
