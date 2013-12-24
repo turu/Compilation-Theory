@@ -16,10 +16,22 @@ class TreePrinter:
     def printTree(self, indent=0):
         raise Exception("printTree not defined in class " + self.__class__.__name__)
 
+    @addToClass(AST.Const)
+    def printTree(self, indent=0):
+        return INDENT_TOKEN * indent + str(self.value) + "\n"
+
     @addToClass(AST.ExpressionList)
     def printTree(self, indent=0):
         return "".join(map(lambda x: x.printTree(indent + 1), self.expressionList))
-        
+
+    @addToClass(AST.ArgumentList)
+    def printTree(self, indent=0):
+        return "".join(map(lambda x: x.printTree(indent), self.argList))
+
+    @addToClass(AST.Argument)
+    def printTree(self, indent=0):
+        return INDENT_TOKEN * indent + "ARG " + self.name + "\n"
+
     @addToClass(AST.BinExpr)
     def printTree(self, indent=0):
         return INDENT_TOKEN * indent + self.op + "\n" + self.lhs.printTree(indent + 1) + self.rhs.printTree(indent + 1)
@@ -27,46 +39,44 @@ class TreePrinter:
     @addToClass(AST.GroupedExpression)
     def printTree(self, indent=0):
         return self.interior.printTree(indent)
-        
+
+    @addToClass(AST.CompoundInstruction)
+    def printTree(self, indent=0):
+        return ("" if self.declarations is None else self.declarations.printTree(indent + 1)) + \
+            self.instructions.printTree(indent + 1)
+
+    @addToClass(AST.LabeledInstruction)
+    def printTree(self, indent=0):
+        return INDENT_TOKEN * indent + "LABEL\n" + INDENT_TOKEN * (indent + 1) + str(self.id) + "\n" + \
+               self.instr.printTree(indent + 1)
+
     @addToClass(AST.InvocationExpression)
     def printTree(self, indent=0):
         return INDENT_TOKEN * indent + "FUNCALL\n" + INDENT_TOKEN * (indent + 1) + str(self.name) + "\n" + \
             self.args.printTree(indent+1)
-        
-    @addToClass(AST.Const)
-    def printTree(self, indent=0):
-        return INDENT_TOKEN * indent + str(self.value) + "\n"
-        
-    @addToClass(AST.Argument)
-    def printTree(self, indent=0):
-        return INDENT_TOKEN * indent + "ARG " + self.name + "\n"
 
-    @addToClass(AST.ArgumentList)
-    def printTree(self, indent=0):
-        return "".join(map(lambda x: x.printTree(indent), self.argList))
-            
     @addToClass(AST.FunctionExpressionList)
     def printTree(self, indent=0):
         return "".join(map(lambda x: x.printTree(indent), self.fundefs))
-    
+
     @addToClass(AST.FunctionExpression)
     def printTree(self, indent=0):
         return INDENT_TOKEN * indent + "FUNDEF\n" + INDENT_TOKEN * (indent + 1) + str(self.name) + "\n" + \
             INDENT_TOKEN * (indent + 1) + "RET " + str(self.retType) + "\n" + self.args.printTree(indent + 1) + \
             self.body.printTree(indent)
-         
+
     @addToClass(AST.DeclarationList)
     def printTree(self, indent=0):
         return INDENT_TOKEN * indent + "DECL\n" + "".join(map(lambda x: x.printTree(indent + 1), self.declarations))
-        
+
     @addToClass(AST.Declaration)
     def printTree(self, indent=0):
         return self.inits.printTree(indent)
-        
+
     @addToClass(AST.InitList)
     def printTree(self, indent=0):
         return "".join(map(lambda x: x.printTree(indent), self.inits))
-        
+
     @addToClass(AST.Init)
     def printTree(self, indent=0):
         return INDENT_TOKEN * indent + "=\n" + INDENT_TOKEN * (indent + 1) + str(self.name) + "\n" + \
@@ -76,19 +86,9 @@ class TreePrinter:
     def printTree(self, indent=0):
         return "".join(map(lambda x: x.printTree(indent), self.instructions))
 
-    @addToClass(AST.CompoundInstruction)
-    def printTree(self, indent=0):
-        return ("" if self.declarations is None else self.declarations.printTree(indent + 1)) + \
-               self.instructions.printTree(indent + 1)
-
     @addToClass(AST.PrintInstruction)
     def printTree(self, indent=0):
         return INDENT_TOKEN * indent + "PRINT\n" + self.expr.printTree(indent + 1)
-
-    @addToClass(AST.LabeledInstruction)
-    def printTree(self, indent=0):
-        return INDENT_TOKEN * indent + "LABEL\n" + INDENT_TOKEN * (indent + 1) + str(self.id) + "\n" + \
-            self.instr.printTree(indent + 1)
 
     @addToClass(AST.Assignment)
     def printTree(self, indent=0):
