@@ -126,7 +126,7 @@ class LabeledInstruction(Node):
         self.instr = instr
 
 
-class Assignment(Node):
+class AssignmentInstruction(Node):
     def __init__(self, id, expr):
         self.id = id
         self.expr = expr

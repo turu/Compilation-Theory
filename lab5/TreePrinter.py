@@ -90,7 +90,7 @@ class TreePrinter:
     def printTree(self, indent=0):
         return INDENT_TOKEN * indent + "PRINT\n" + self.expr.printTree(indent + 1)
 
-    @addToClass(AST.Assignment)
+    @addToClass(AST.AssignmentInstruction)
     def printTree(self, indent=0):
         return INDENT_TOKEN * indent + "=\n" + INDENT_TOKEN * (indent + 1) + str(self.id) + "\n" + \
             self.expr.printTree(indent + 1)

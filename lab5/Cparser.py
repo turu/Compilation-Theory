@@ -113,7 +113,7 @@ class Cparser(object):
         """assignment : ID '=' expression ';' """
         id = p[1]
         expr = p[3]
-        p[0] = AST.Assignment(id, expr)
+        p[0] = AST.AssignmentInstruction(id, expr)
     
     def p_choice_instr(self, p):
         """choice_instr : IF '(' condition ')' instruction  %prec IFX
