@@ -196,19 +196,19 @@ class Cparser(object):
         if len(p) == 2:
             value = p[1]
             p[0] = AST.Const(value)
-        elif p[1] == "(":
-            interior = p[2]
-            p[0] = AST.GroupedExpression(interior)
-        elif p[2] == "(":
+        elif p[2] == "(" and p[1] != "(":
             funcName = p[1]
             args = p[3]
             p[0] = AST.InvocationExpression(funcName, args)
+        elif p[1] == "(":
+            interior = p[2]
+            p[0] = AST.GroupedExpression(interior)
         else:
             lhs = p[1]
             op = p[2]
             rhs = p[3]
             p[0] = AST.BinExpr(lhs, op, rhs)
-            
+
     def p_expr_list_or_empty(self, p):
         """expr_list_or_empty : expr_list
                               | """
@@ -217,7 +217,7 @@ class Cparser(object):
     def p_expr_list(self, p):
         """expr_list : expr_list ',' expression
                      | expression """
-        if len(p)==4:
+        if len(p) == 4:
             p[0] = AST.ExpressionList() if p[1] is None else p[1]
             p[0].addExpression(p[3])
         else:
@@ -246,7 +246,7 @@ class Cparser(object):
     def p_args_list(self, p):
         """args_list : args_list ',' arg 
                      | arg """
-        if len(p)==4:
+        if len(p) == 4:
             p[0] = AST.ArgumentList() if p[1] is None else p[1]
             p[0].addArgument(p[3])
         else:
