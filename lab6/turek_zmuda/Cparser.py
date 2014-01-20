@@ -36,13 +36,13 @@ class Cparser(object):
 
 
     def p_program(self, p):
-        """program : declarations fundefs instructions"""
+        """program : children children children"""
         declarations = None if len(p[1].declarations) == 0 else p[1]
         fundefs = None if len(p[2].fundefs) == 0 else p[2]
         print AST.Program(declarations, fundefs, p[3])
 
     def p_declarations(self, p):
-        """declarations : declarations declaration
+        """children : children declaration
                         | """
         if len(p) == 3:
             p[0] = AST.DeclarationList() if p[1] is None else p[1]
@@ -59,7 +59,7 @@ class Cparser(object):
             p[0] = AST.Declaration(type, inits)
 
     def p_inits(self, p):
-        """inits : inits ',' init
+        """children : children ',' init
                  | init """
         if len(p) == 4:
             p[0] = AST.InitList() if p[1] is None else p[1]
@@ -133,7 +133,7 @@ class Cparser(object):
         p[0] = AST.WhileInstruction(condition, instruction)
 
     def p_repeat_instr(self, p):
-        """repeat_instr : REPEAT instructions UNTIL condition ';' """
+        """repeat_instr : REPEAT children UNTIL condition ';' """
         instructions = p[2]
         condition = p[4]
         p[0] = AST.RepeatInstruction(instructions, condition)
@@ -152,7 +152,7 @@ class Cparser(object):
         p[0] = AST.BreakInstruction()
  
     def p_compound_instr(self, p):
-        """compound_instr : '{' declarations instructions '}' """
+        """compound_instr : '{' children children '}' """
         if len(p[2].declarations) == 0:
             p[0] = AST.CompoundInstruction(None, p[3])
         else:

@@ -37,8 +37,8 @@ class Cparser(object):
 
     def p_program(self, p):
         """program : declarations fundefs instructions"""
-        declarations = None if len(p[1].declarations) == 0 else p[1]
-        fundefs = None if len(p[2].fundefs) == 0 else p[2]
+        declarations = None if len(p[1].children) == 0 else p[1]
+        fundefs = None if len(p[2].children) == 0 else p[2]
         print AST.Program(declarations, fundefs, p[3])
 
     def p_declarations(self, p):
@@ -153,7 +153,7 @@ class Cparser(object):
  
     def p_compound_instr(self, p):
         """compound_instr : '{' declarations instructions '}' """
-        if len(p[2].declarations) == 0:
+        if len(p[2].children) == 0:
             p[0] = AST.CompoundInstruction(None, p[3])
         else:
             p[0] = AST.CompoundInstruction(p[2], p[3])

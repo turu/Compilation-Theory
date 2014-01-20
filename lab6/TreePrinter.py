@@ -22,11 +22,11 @@ class TreePrinter:
 
     @addToClass(AST.ExpressionList)
     def printTree(self, indent=0):
-        return "".join(map(lambda x: x.printTree(indent + 1), self.expressionList))
+        return "".join(map(lambda x: x.printTree(indent + 1), self.children))
 
     @addToClass(AST.ArgumentList)
     def printTree(self, indent=0):
-        return "".join(map(lambda x: x.printTree(indent), self.argList))
+        return "".join(map(lambda x: x.printTree(indent), self.children))
 
     @addToClass(AST.Argument)
     def printTree(self, indent=0):
@@ -57,7 +57,7 @@ class TreePrinter:
 
     @addToClass(AST.FunctionExpressionList)
     def printTree(self, indent=0):
-        return "".join(map(lambda x: x.printTree(indent), self.fundefs))
+        return "".join(map(lambda x: x.printTree(indent), self.children))
 
     @addToClass(AST.FunctionExpression)
     def printTree(self, indent=0):
@@ -67,7 +67,7 @@ class TreePrinter:
 
     @addToClass(AST.DeclarationList)
     def printTree(self, indent=0):
-        return INDENT_TOKEN * indent + "DECL\n" + "".join(map(lambda x: x.printTree(indent + 1), self.declarations))
+        return INDENT_TOKEN * indent + "DECL\n" + "".join(map(lambda x: x.printTree(indent + 1), self.children))
 
     @addToClass(AST.Declaration)
     def printTree(self, indent=0):
@@ -75,7 +75,7 @@ class TreePrinter:
 
     @addToClass(AST.InitList)
     def printTree(self, indent=0):
-        return "".join(map(lambda x: x.printTree(indent), self.inits))
+        return "".join(map(lambda x: x.printTree(indent), self.children))
 
     @addToClass(AST.Init)
     def printTree(self, indent=0):
@@ -84,7 +84,7 @@ class TreePrinter:
 
     @addToClass(AST.InstructionList)
     def printTree(self, indent=0):
-        return "".join(map(lambda x: x.printTree(indent), self.instructions))
+        return "".join(map(lambda x: x.printTree(indent), self.children))
 
     @addToClass(AST.PrintInstruction)
     def printTree(self, indent=0):
@@ -107,7 +107,7 @@ class TreePrinter:
 
     @addToClass(AST.RepeatInstruction)
     def printTree(self, indent=0):
-        return INDENT_TOKEN * indent + "REPEAT\n" + self.instructions.printTree(indent + 1) + INDENT_TOKEN * indent + \
+        return INDENT_TOKEN * indent + "REPEAT\n" + self.children.printTree(indent + 1) + INDENT_TOKEN * indent + \
             "UNTIL\n" + self.condition.printTree(indent + 1)
 
     @addToClass(AST.ReturnInstruction)
