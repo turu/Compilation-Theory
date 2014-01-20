@@ -1,35 +1,38 @@
 #!/usr/bin/python
+from collections import defaultdict
+
+
+class Symbol():
+    pass
 
 
 class VariableSymbol(Symbol):
-
     def __init__(self, name, type):
-        pass
-    #
-    #
+        self.name = name
+        self.type = type
+
+
+class FunctionSymbol():
+    def __init__(self, name, type, params):
+        self.name = name
+        self.type = type
+        self.params = params
 
 
 class SymbolTable(object):
-
     def __init__(self, parent, name): # parent scope and symbol table name
-        pass
-    #
-    #
+        self.parent = parent
+        self.name = name
+        self.entries = {}
 
     def put(self, name, symbol): # put variable symbol or fundef under <name> entry
-        pass
-    #
-    #
+        self.entries[name] = symbol
 
     def get(self, name): # get variable symbol or fundef from <name> entry
-        pass
-    #
-    #
+        return self.entries[name]
 
     def getParentScope(self):
-        pass
-    #
-    #
+        return self.parent
 
 
 
