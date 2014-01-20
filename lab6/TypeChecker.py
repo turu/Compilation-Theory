@@ -51,18 +51,19 @@ class NodeVisitor(object):
 
 class TypeChecker(NodeVisitor):
     def visit_BinExpr(self, node):
-    # alternative usage,
-    # requires definition of accept method in class Node
-        type1 = self.visit(node.left)     # type1 = node.left.accept(self) 
-        type2 = self.visit(node.right)    # type2 = node.right.accept(self)
+        type1 = self.visit(node.lhs)
+        type2 = self.visit(node.rhs)
         op = node.op
         return ttype[op][type1][type2]
 
-    def visit_RelExpr(self, node):
-        type1 = self.visit(node.left)     # type1 = node.left.accept(self) 
-        type2 = self.visit(node.right)    # type2 = node.right.accept(self)
-        # ... 
-        #
+    def visit_FunctionExpression(self,node):
+        return node.retType
+
+    def visit_Declaration(self,node):
+        return node.type
+
+    def visit_Argument(self,node):
+        return node.type
 
     def visit_Integer(self, node):
         return 'int'
@@ -70,7 +71,6 @@ class TypeChecker(NodeVisitor):
     def visit_Float(self, node):
         return 'float'
 
-
-    def visit_Float(self, node):
-        return 'float'
+    def visit_String(self, node):
+        return 'string'
 
