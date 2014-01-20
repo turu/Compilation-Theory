@@ -29,10 +29,14 @@ class SymbolTable(object):
         self.entries[name] = symbol
 
     def get(self, name): # get variable symbol or fundef from <name> entry
-        return self.entries[name]
+        if self.entries[name]:
+            return self.entries[name]
+        else:
+            return self.parent.get(name)
 
     def getParentScope(self):
         return self.parent
+
 
 
 
