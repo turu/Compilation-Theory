@@ -74,3 +74,7 @@ class TypeChecker(NodeVisitor):
     def visit_String(self, node):
         return 'string'
 
+    def visit_GroupedExpression(self, node):
+        self.visit(node.interior)
+
+    
