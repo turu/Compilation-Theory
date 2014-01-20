@@ -33,10 +33,10 @@ class BinExpr(Node):
 
 class ExpressionList(Node):
     def __init__(self):
-        self.expressionList = []
+        self.children = []
 
     def addExpression(self, expr):
-        self.expressionList.append(expr)
+        self.children.append(expr)
 
 
 class GroupedExpression(Node):
@@ -53,18 +53,18 @@ class FunctionExpression(Node):
 
 class FunctionExpressionList(Node):
     def __init__(self):
-        self.fundefs = []
+        self.children = []
 
     def addFunction(self, fundef):
-        self.fundefs.append(fundef)
+        self.children.append(fundef)
 
 
 class DeclarationList(Node):
     def __init__(self):
-        self.declarations = []
+        self.children = []
 
     def addDeclaration(self, declaration):
-        self.declarations.append(declaration)
+        self.children.append(declaration)
 
 
 class Declaration(Node):
@@ -87,18 +87,18 @@ class Argument(Node):
 
 class ArgumentList(Node):
     def __init__(self):
-        self.argList = []
+        self.children = []
         
     def addArgument(self, arg):
-        self.argList.append(arg)
+        self.children.append(arg)
 
 
 class InitList(Node):
     def __init__(self):
-        self.inits = []
+        self.children = []
         
     def addInit(self, init):
-        self.inits.append(init)
+        self.children.append(init)
 
 
 class Init(Node):
@@ -109,10 +109,10 @@ class Init(Node):
 
 class InstructionList(Node):
     def __init__(self):
-        self.instructions = []
+        self.children = []
     
     def addInstruction(self, instr):
-        self.instructions.append(instr)
+        self.children.append(instr)
 
 
 class PrintInstruction(Node):
