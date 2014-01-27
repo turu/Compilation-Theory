@@ -22,10 +22,6 @@ class Interpreter(object):
         # elsif(node.op=='-') ...
         # if(node.op=='+') return r1+r2
 
-    @when(AST.Assignment)
-    def visit(self, node):
-        pass
-
     #!
     @when(AST.GroupedExpression)
     def visit(self, node):
@@ -66,6 +62,11 @@ class Interpreter(object):
 
     #!
     @when(AST.ExpressionList)
+    def visit(self, node):
+        for child in node.children:
+            child.accept(self)
+
+    #!
     @when(AST.FunctionExpressionList)
     def visit(self, node):
         for child in node.children:
@@ -95,6 +96,100 @@ class Interpreter(object):
             fun.body.accept(self)
         except ReturnValueException as e:
             return e.value
+
+    @when(AST.Argument)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.ArgumentList)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.AssignmentInstruction)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.BreakInstruction)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.ContinueInstruction)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.Declaration)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.DeclarationList)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.ExpressionList)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.Float)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.Init)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.InitList)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.Integer)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.Integer)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.LabeledInstruction)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.PrintInstruction)
+    def visit(self, node):
+        print node.expr
+
+
+    @when(AST.Program)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.ReturnInstruction)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.String)
+    def visit(self, node):
+        pass
+
+
+    @when(AST.Variable)
+    def visit(self, node):
+        pass
 
 
 

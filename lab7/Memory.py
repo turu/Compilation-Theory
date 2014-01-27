@@ -20,7 +20,7 @@ class MemoryStack:
         if memory is not None:
             self.stack.append(memory)
         else:
-            self.stack.append(Memory())
+            self.stack.append(Memory("toplevel"))
 
     def get(self, name):             # get from memory stack current value of variable <name>
         for i in range(len(self.stack) - 1, 0):
