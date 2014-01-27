@@ -1,4 +1,4 @@
-int a = 0;
+int a = 1;
 int d = 2;
 int e = d + 2;
 

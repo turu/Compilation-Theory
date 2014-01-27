@@ -68,7 +68,8 @@ class TypeChecker(NodeVisitor):
         definition = self.table.getGlobal(node.name)
         if definition is None:
             print "Undefined symbol {} in line {}".format(node.name, node.line)
-        return definition.type
+        else:
+            return definition.type
 
     def visit_BinExpr(self, node):
         lhs = self.visit(node.lhs)
@@ -112,7 +113,7 @@ class TypeChecker(NodeVisitor):
         self.table = self.table.getParentScope()
 
     def visit_ArgumentList(self, node):
-        for arg in node.args:
+        for arg in node.children:
             self.visit(arg)
         self.actFunc.extractParams()
 
@@ -125,7 +126,7 @@ class TypeChecker(NodeVisitor):
         if funDef is None or not isinstance(funDef, FunctionSymbol):
             print "Function {} not defined. Line: {}".format(node.name, node.line)
         else:
-            if (node.args is None or len(node.args) == 0) and funDef.params != []:
+            if node.args is None and funDef.params != []:
                 print "Invalid number of arguments in line {}. Expected {}".\
                     format(node.line, len(funDef.params))
             else:
@@ -135,7 +136,7 @@ class TypeChecker(NodeVisitor):
                     if actual != expected and not (actual == "int" and expected == "float"):
                         print "Mismatching argument types in line {}. Expected {}, got {}".\
                             format(node.line, expected, actual)
-            return funDef.retType
+            return funDef.type
 
     def visit_ChoiceInstruction(self, node):
         self.visit(node.condition)
@@ -157,7 +158,7 @@ class TypeChecker(NodeVisitor):
         else:
             type = self.visit(node.expression)
             if type != self.actFunc.type and (self.actFunc.type != "float" or type != "int"):
-                print "Invalid return type of {} in line {}. Expected {}".format(type, self.actFunc.type, node.line)
+                print "Invalid return type of {} in line {}. Expected {}".format(type, node.line, self.actFunc.type)
 
     def visit_Init(self, node):
         initType = self.visit(node.expr)

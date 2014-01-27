@@ -172,10 +172,13 @@ class Cparser(object):
             p[0] = AST.Integer(p.lineno(1), p[1])
         else:
             p[0] = AST.String(p.lineno(1), p[1])
-    
+
+    def p_expression_id(self, p):
+        """expression : ID"""
+        p[0] = AST.Variable(p.lineno(1), p[1])
+
     def p_expression(self, p):
         """expression : const
-                      | ID
                       | expression '+' expression
                       | expression '-' expression
                       | expression '*' expression
@@ -199,8 +202,7 @@ class Cparser(object):
                       | ID '(' expr_list_or_empty ')'
                       | ID '(' error ')' """
         if len(p) == 2:
-            value = p[1]
-            p[0] = AST.Const(p.lineno(1), value)
+            p[0] = p[1]
         elif p[2] == "(" and p[1] != "(":
             funcName = p[1]
             args = p[3]
@@ -212,7 +214,7 @@ class Cparser(object):
             lhs = p[1]
             op = p[2]
             rhs = p[3]
-            p[0] = AST.BinExpr(p.lineno(1), lhs, op, rhs)
+            p[0] = AST.BinExpr(p.lineno(2), lhs, op, rhs)
 
     def p_expr_list_or_empty(self, p):
         """expr_list_or_empty : expr_list
