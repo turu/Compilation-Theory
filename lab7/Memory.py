@@ -36,6 +36,7 @@ class MemoryStack:
         for i in range(len(self.stack) - 1, 0):
             if self.stack[i].has_key(name):
                 self.stack[i].put(name, value)
+                break
 
     def push(self, memory): # push memory <memory> onto the stack
         self.stack.append(memory)
