@@ -34,7 +34,9 @@ class MemoryStack:
         self.stack[-1].put(name, value)
 
     def set(self, name, value): # sets variable <name> to value <value>
-        for i in range(len(self.stack) - 1, 0):
+        indices = range(len(self.stack))
+        indices.reverse()
+        for i in indices:
             if self.stack[i].has_key(name):
                 self.stack[i].put(name, value)
                 break

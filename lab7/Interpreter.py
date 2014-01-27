@@ -38,19 +38,26 @@ class Interpreter(object):
     # simplistic while loop interpretation
     @when(AST.WhileInstruction)
     def visit(self, node):
-        r = None
         while node.condition.accept(self):
-            r = node.instruction.accept(self)
-        return r
+            try:
+                node.instruction.accept(self)
+            except BreakException:
+                break
+            except ContinueException:
+                pass
 
     #!
     @when(AST.RepeatInstruction)
     def visit(self, node):
-        r = node.instruction.accept(self)
-        while node.condition.accept(self):
-            r = node.instruction.accept(self)
-        return r
-
+        while True:
+            try:
+                node.instruction.accept(self)
+                if node.condition.accept(self):
+                    break
+            except BreakException:
+                break
+            except ContinueException:
+                pass
 
     #!
     @when(AST.ChoiceInstruction)
@@ -84,7 +91,10 @@ class Interpreter(object):
     @when(AST.CompoundInstruction)
     def visit(self, node):
         node.declarations.accept(self)
-        node.instructions.accept(self)
+        try:
+            node.instructions.accept(self)
+        except BreakException:
+            pass
 
     #!
     @when(AST.FunctionExpression)

@@ -1,10 +1,22 @@
 int d = 2;
 int e = d + 2;
 
+int random_ocena(int bound) {
+    int ocena = 2;
+    int i = 0;
+    while (i < bound) {
+        i = i + 1;
+        continue;
+        ocena = ocena * ocena;
+    }
+    return ocena;
+}
+
 int main(int arg) {
-    return e+arg;
+    return 0;
 }
 
 print 2+2;
 print d;
 print main(7);
+print random_ocena(8);
