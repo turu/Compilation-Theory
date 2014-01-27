@@ -1,7 +1,6 @@
 class Node(object):
-    #def __str__(self):
-    #    return self.printTree()
-    pass
+    def accept(self, visitor):
+        return visitor.visit(self)
 
 
 class Const(Node):
@@ -88,7 +87,7 @@ class InvocationExpression(Node):
         self.args = args
         self.line = line
 
-   
+
 class Argument(Node):
     def __init__(self, line, type, name):
         self.type = type
@@ -99,7 +98,7 @@ class Argument(Node):
 class ArgumentList(Node):
     def __init__(self):
         self.children = []
-        
+
     def addArgument(self, arg):
         self.children.append(arg)
 
@@ -107,7 +106,7 @@ class ArgumentList(Node):
 class InitList(Node):
     def __init__(self):
         self.children = []
-        
+
     def addInit(self, init):
         self.children.append(init)
 
@@ -122,7 +121,7 @@ class Init(Node):
 class InstructionList(Node):
     def __init__(self):
         self.children = []
-    
+
     def addInstruction(self, instr):
         self.children.append(instr)
 
