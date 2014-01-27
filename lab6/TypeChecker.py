@@ -120,6 +120,8 @@ class TypeChecker(NodeVisitor):
     def visit_Argument(self, node):
         if self.table.get(node.name) is not None:
             print "Argument {} already defined. Line: {}".format(node.name, node.line)
+        else:
+            self.table.put(node.name, VariableSymbol(node.name, node.type))
 
     def visit_InvocationExpression(self, node):
         funDef = self.table.getGlobal(node.name)

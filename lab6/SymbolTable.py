@@ -20,7 +20,7 @@ class FunctionSymbol(Symbol):
         self.table = table
 
     def extractParams(self):
-        self.params = [x.type for x in self.table.entries]
+        self.params = [x.type for x in self.table.entries.values()]
 
 
 class SymbolTable(object):
