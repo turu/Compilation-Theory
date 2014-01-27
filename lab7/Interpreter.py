@@ -43,4 +43,12 @@ class Interpreter(object):
             r = node.instruction.accept(self)
         return r
 
+    #!
+    @when(AST.RepeatInstruction)
+    def visit(self, node):
+        r = node.instruction.accept(self)
+        while node.condition.accept(self):
+            r = node.instruction.accept(self)
+        return r
+
 
