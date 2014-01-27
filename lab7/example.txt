@@ -7,3 +7,4 @@ int main(int arg) {
 
 print 2+2;
 print d;
+print main(7);

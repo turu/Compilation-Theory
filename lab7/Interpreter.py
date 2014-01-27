@@ -97,8 +97,8 @@ class Interpreter(object):
     def visit(self, node):
         fun = self.memoryStack.get(node.name)#EXCEPTION
         funMemory = Memory(node.name)
-        for argExpr, actualArg in zip(node.args, fun.args):
-            funMemory.put(argExpr, actualArg.accept(self))
+        for argExpr, actualArg in zip(node.args.children, fun.args.children):
+            funMemory.put(actualArg.accept(self), argExpr.accept(self))
         self.memoryStack.push(funMemory)
         try:
             fun.body.accept(self)
