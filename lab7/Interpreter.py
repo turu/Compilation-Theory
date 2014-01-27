@@ -1,3 +1,4 @@
+from optparse import _parse_int
 import AST
 import SymbolTable
 from Memory import *
@@ -17,7 +18,7 @@ class Interpreter(object):
     def visit(self, node):
         r1 = node.lhs.accept(self)
         r2 = node.rhs.accept(self)
-        eval("a" + node.op + "b", {"a": r1, "b": r2})
+        return eval("a" + node.op + "b", {"a": r1, "b": r2})
         # try sth smarter than:
         # elsif(node.op=='-') ...
         # if(node.op=='+') return r1+r2
@@ -29,9 +30,9 @@ class Interpreter(object):
 
 
     #!
-    @when(AST.Const)
-    def visit(self, node):
-        return node.value
+    #@when(AST.Const)
+    #def visit(self, node):
+    #    return node.value
 
     #!
     # simplistic while loop interpretation
@@ -62,6 +63,13 @@ class Interpreter(object):
 
     #!
     @when(AST.ExpressionList)
+    def visit(self, node):
+        for child in node.children:
+            child.accept(self)
+
+            #!
+
+    @when(AST.InstructionList)
     def visit(self, node):
         for child in node.children:
             child.accept(self)
@@ -99,97 +107,101 @@ class Interpreter(object):
 
     @when(AST.Argument)
     def visit(self, node):
-        pass
+        return node.name
 
 
     @when(AST.ArgumentList)
     def visit(self, node):
-        pass
+        for child in node.children:
+            child.accept(self)
 
 
     @when(AST.AssignmentInstruction)
     def visit(self, node):
-        pass
+        expr_accept = node.expr.accept(self)
+        self.memoryStack.set(node.id, expr_accept)
+        return expr_accept
 
 
     @when(AST.BreakInstruction)
     def visit(self, node):
-        pass
-
+        raise BreakException()
 
     @when(AST.ContinueInstruction)
     def visit(self, node):
-        pass
+        raise ContinueException()
 
 
     @when(AST.Declaration)
     def visit(self, node):
-        pass
+        node.inits.accept(self)
 
 
     @when(AST.DeclarationList)
     def visit(self, node):
-        pass
+        for child in node.children:
+            child.accept(self)
 
 
     @when(AST.ExpressionList)
     def visit(self, node):
-        pass
+        for child in node.children:
+            child.accept(self)
 
 
     @when(AST.Float)
     def visit(self, node):
-        pass
+        return float(node.value)
 
 
     @when(AST.Init)
     def visit(self, node):
-        pass
+        expr_accept = node.expr.accept(self)
+        self.memoryStack.peek().put(node.name, expr_accept)
+        return expr_accept
 
 
     @when(AST.InitList)
     def visit(self, node):
-        pass
+        for child in node.children:
+            child.accept(self)
 
 
     @when(AST.Integer)
     def visit(self, node):
-        pass
-
-
-    @when(AST.Integer)
-    def visit(self, node):
-        pass
-
+        return int(node.value);
 
     @when(AST.LabeledInstruction)
     def visit(self, node):
-        pass
+        pass#####################################################################
 
 
     @when(AST.PrintInstruction)
     def visit(self, node):
-        print node.expr
+        print node.expr.accept(self)
 
 
     @when(AST.Program)
     def visit(self, node):
-        pass
+        node.declarations.accept(self)
+        node.fundefs.accept(self)
+        node.instructions.accept(self)
 
 
     @when(AST.ReturnInstruction)
     def visit(self, node):
-        pass
+        value = node.expression.accept(self)
+        raise ReturnValueException(value)
 
 
     @when(AST.String)
     def visit(self, node):
-        pass
+        return node.value
 
 
     @when(AST.Variable)
     def visit(self, node):
-        pass
+        return self.memoryStack.get(node.name)
 
 
 

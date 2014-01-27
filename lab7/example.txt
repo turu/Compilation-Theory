@@ -2,8 +2,8 @@ int d = 2;
 int e = d + 2;
 
 int main(int arg) {
-    e=e+2;
-    return 0;
+    return e+arg;
 }
 
 print 2+2;
+print d;

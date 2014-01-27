@@ -4,7 +4,7 @@ class Memory:
         self.dict = {}
 
     def has_key(self, name):  # variable name
-        return name in dict
+        return name in self.dict
 
     def get(self, name):         # get from memory current value of variable <name>
         if self.has_key(name):
@@ -23,7 +23,9 @@ class MemoryStack:
             self.stack.append(Memory("toplevel"))
 
     def get(self, name):             # get from memory stack current value of variable <name>
-        for i in range(len(self.stack) - 1, 0):
+        indices = range(len(self.stack))
+        indices.reverse()
+        for i in indices:
             if self.stack[i].has_key(name):
                 return self.stack[i].get(name)
         return None
