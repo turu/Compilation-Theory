@@ -28,13 +28,14 @@ class NodeVisitor(object):
     def visit(self, node):
         method = 'visit_' + node.__class__.__name__
         visitor = getattr(self, method, self.generic_visit)
+        #print "node {} has visitor {}".format(str(node), str(visitor))
         return visitor(node)
 
     def generic_visit(self, node):        # Called if no explicit visitor function exists for a node.
         if isinstance(node, list):
             for elem in node:
                 self.visit(elem)
-        else:
+        elif hasattr(node, "children"):
             for child in node.children:
                 if isinstance(child, list):
                     for item in child:
@@ -181,6 +182,7 @@ class TypeChecker(NodeVisitor):
         self.visit(node.instr)
 
     def visit_Program(self, node):
+        #print "Visiting program"
         self.visit(node.declarations)
         self.visit(node.fundefs)
         self.visit(node.instructions)

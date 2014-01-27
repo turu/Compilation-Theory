@@ -33,9 +33,10 @@ class SymbolTable(object):
         self.entries[name] = symbol
 
     def get(self, name): # get variable symbol or fundef from <name> entry
-        if self.entries[name]:
-            return self.entries[name]
-        else:
+        try:
+            ret = self.entries[name]
+            return ret
+        except:
             return None
 
     def getGlobal(self, name):

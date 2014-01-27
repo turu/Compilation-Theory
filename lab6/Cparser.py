@@ -2,7 +2,6 @@
 
 from scanner import Scanner
 import AST
-import TreePrinter
 import re
 
 
@@ -40,7 +39,7 @@ class Cparser(object):
         """program : declarations fundefs instructions"""
         declarations = None if len(p[1].children) == 0 else p[1]
         fundefs = None if len(p[2].children) == 0 else p[2]
-        print AST.Program(declarations, fundefs, p[3])
+        p[0] = AST.Program(declarations, fundefs, p[3])
 
     def p_declarations(self, p):
         """declarations : declarations declaration

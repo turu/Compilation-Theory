@@ -1,11 +1,13 @@
-float a = 0, b = 0, c = 0;
+int a = 0;
+int d = 2;
+int e = d + 2;
 
 int gcd(int m, int n) {
 
 int res = 0;
 if (m!=n) { 
     if (m > n) 
-        res = gcd(m-n, n);
+        res = gcd(m-n, mm);
     else
         res = gcd(n-m, m);
 }
@@ -16,12 +18,12 @@ print res;
 return res;
 }
 
+int ggg(int a, int b) {
+    return 0;
+}
+
 while(a >= b ) {
+    string a = ggg();
+    int c = a();
     a = 1/2*(a+b/a);
 }
-
-if ( a >= b) {
-	print a;
-}
-
-a = 9;
