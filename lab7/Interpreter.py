@@ -6,6 +6,9 @@ from visit import *
 
 
 class Interpreter(object):
+    def __init__(self):
+        self.memory = Memory()
+
     @on('node')
     def visit(self, node):
         pass
@@ -59,3 +62,26 @@ class Interpreter(object):
             return node.action.accept(self)
         else:
             return node.alternateAction.accept(self)
+
+
+    #!
+    @when(AST.ExpressionList)
+    @when(AST.FunctionExpressionList)
+    def visit(self, node):
+        for child in node.children:
+            child.accept(self)
+
+    #!
+    @when(AST.CompoundInstruction)
+    def visit(self, node):
+        node.declarations.accept(self)
+        node.instructions.accept(self)
+
+    #!
+    @when(AST.FunctionExpression)
+    def visit(self, node):
+        self.memory.put(node.name, node)#hakjerstowo
+
+
+
+
