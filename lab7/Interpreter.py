@@ -23,12 +23,11 @@ class Interpreter(object):
     def visit(self, node):
         pass
 
+    #!
     @when(AST.GroupedExpression)
     def visit(self, node):
-        pass
+        return node.inerior.accept(self)
 
-        #
-    #
 
     #!
     @when(AST.Const)
