@@ -1,0 +1,30 @@
+int a = 1.0, c = "sdya";
+int d = 2;
+int e = d + 2;
+int z = 1/2 * (a + d) / e; 
+
+int gcd(int m, int n) {
+
+int res = 0;
+if (m!=n) { 
+    if (m > n) 
+        res = gcd(m-n, mm);
+    else
+        res = gcd(n-m, m);
+}
+else
+    res = m;
+
+print res;
+return res;
+}
+
+int ggg(int a, int b) {
+    return "sad";
+}
+
+while(a >= b ) {
+	int dupa_blada = ggg();
+    int c = a();
+    a = 1/2*(a+b/a);
+}
