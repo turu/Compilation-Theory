@@ -248,7 +248,7 @@ class Cparser(object):
     def p_args_list_or_empty(self, p):
         """args_list_or_empty : args_list
                               | """
-        p[0] = None if len(p) == 0 else p[1]
+        p[0] = None if len(p) == 1 else p[1]
 
     def p_args_list(self, p):
         """args_list : args_list ',' arg 
