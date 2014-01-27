@@ -3,6 +3,7 @@
 from scanner import Scanner
 import AST
 import TreePrinter
+import re
 
 
 class Cparser(object):
@@ -72,7 +73,7 @@ class Cparser(object):
         """init : ID '=' expression """
         id = p[1]
         expr = p[3]
-        p[0] = AST.Init(id, expr)
+        p[0] = AST.Init(p.lineno(1), id, expr)
     
     def p_instructions(self, p):
         """instructions : instructions instruction
@@ -101,19 +102,19 @@ class Cparser(object):
         """print_instr : PRINT expression ';'
                        | PRINT error ';' """
         expr = p[2]
-        p[0] = AST.PrintInstruction(expr)
+        p[0] = AST.PrintInstruction(p.lineno(1), expr)
     
     def p_labeled_instr(self, p):
         """labeled_instr : ID ':' instruction """
         id = p[1]
         instruction = p[3]
-        p[0] = AST.LabeledInstruction(id, instruction)
+        p[0] = AST.LabeledInstruction(p.lineno(1), id, instruction)
 
     def p_assignment(self, p):
         """assignment : ID '=' expression ';' """
         id = p[1]
         expr = p[3]
-        p[0] = AST.AssignmentInstruction(id, expr)
+        p[0] = AST.AssignmentInstruction(p.lineno(1), id, expr)
     
     def p_choice_instr(self, p):
         """choice_instr : IF '(' condition ')' instruction  %prec IFX
@@ -141,7 +142,7 @@ class Cparser(object):
     def p_return_instr(self, p):
         """return_instr : RETURN expression ';' """
         expression = p[2]
-        p[0] = AST.ReturnInstruction(expression)
+        p[0] = AST.ReturnInstruction(p.lineno(1), expression)
     
     def p_continue_instr(self, p):
         """continue_instr : CONTINUE ';' """
@@ -166,7 +167,12 @@ class Cparser(object):
         """const : INTEGER
                  | FLOAT
                  | STRING"""
-        p[0] = p[1]
+        if re.match(r"\d+(\.\d*)|\.\d+", p[1]):
+            p[0] = AST.Float(p.lineno(1), p[1])
+        elif re.match(r"\d+", p[1]):
+            p[0] = AST.Integer(p.lineno(1), p[1])
+        else:
+            p[0] = AST.String(p.lineno(1), p[1])
     
     def p_expression(self, p):
         """expression : const
@@ -195,11 +201,11 @@ class Cparser(object):
                       | ID '(' error ')' """
         if len(p) == 2:
             value = p[1]
-            p[0] = AST.Const(value)
+            p[0] = AST.Const(p.lineno(1), value)
         elif p[2] == "(" and p[1] != "(":
             funcName = p[1]
             args = p[3]
-            p[0] = AST.InvocationExpression(funcName, args)
+            p[0] = AST.InvocationExpression(p.lineno(1), funcName, args)
         elif p[1] == "(":
             interior = p[2]
             p[0] = AST.GroupedExpression(interior)
@@ -207,7 +213,7 @@ class Cparser(object):
             lhs = p[1]
             op = p[2]
             rhs = p[3]
-            p[0] = AST.BinExpr(lhs, op, rhs)
+            p[0] = AST.BinExpr(p.lineno(1), lhs, op, rhs)
 
     def p_expr_list_or_empty(self, p):
         """expr_list_or_empty : expr_list
@@ -257,5 +263,5 @@ class Cparser(object):
         """arg : TYPE ID """
         type = p[1]
         name = p[2]
-        p[0] = AST.Argument(type, name)
+        p[0] = AST.Argument(p.lineno(1), type, name)
 

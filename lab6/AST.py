@@ -10,15 +10,18 @@ class Const(Node):
 
 
 class Integer(Const):
-    pass
+    def __init__(self, line, value):
+        Const.__init__(self, line, value)
 
 
 class Float(Const):
-    pass
+    def __init__(self, line, value):
+        Const.__init__(self, line, value)
 
 
 class String(Const):
-    pass
+    def __init__(self, line, value):
+        Const.__init__(self, line, value)
 
 
 class Variable(Node):
