@@ -44,3 +44,6 @@ class MemoryStack:
     def pop(self):          # pops the top memory from the stack
         return self.stack.pop()
 
+    def peek(self):
+        return self.stack[-1]
+
