@@ -7,7 +7,7 @@ from visit import *
 
 class Interpreter(object):
     def __init__(self):
-        self.memory = Memory()
+        self.memoryStack = MemoryStack()
 
     @on('node')
     def visit(self, node):
@@ -80,7 +80,21 @@ class Interpreter(object):
     #!
     @when(AST.FunctionExpression)
     def visit(self, node):
-        self.memory.put(node.name, node)#hakjerstowo
+        self.memoryStack.peek().put(node.name, node)
+
+
+    #!
+    @when(AST.InvocationExpression)
+    def visit(self, node):
+        fun = self.memoryStack.get(node.name)#EXCEPTION
+        funMemory = Memory(node.name)
+        for argExpr, actualArg in zip(node.args, fun.args):
+            funMemory.put(argExpr, actualArg.accept(self))
+        self.memoryStack.push(funMemory)
+        try:
+            fun.body.accept(self)
+        except ReturnValueException as e:
+            return e.value
 
 
 

@@ -11,7 +11,6 @@ class Memory:
     def put(self, name, value):  # puts into memory current value of variable <name>
         pass
 
-
 class MemoryStack:
     def __init__(self, memory=None): # initialize memory stack with memory <memory>
         pass
