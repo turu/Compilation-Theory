@@ -52,3 +52,10 @@ class Interpreter(object):
         return r
 
 
+    #!
+    @when(AST.ChoiceInstruction)
+    def visit(self, node):
+        if node.condition.accept(self):
+            return node.action.accept(self)
+        else:
+            return node.alternateAction.accept(self)
