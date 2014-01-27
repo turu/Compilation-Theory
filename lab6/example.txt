@@ -1,4 +1,4 @@
-int a = 1;
+int a = 1.0, c = "sdya";
 int d = 2;
 int e = d + 2;
 
@@ -23,7 +23,6 @@ int ggg(int a, int b) {
 }
 
 while(a >= b ) {
-    string a = ggg();
     int c = a();
     a = 1/2*(a+b/a);
 }

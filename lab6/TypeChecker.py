@@ -162,7 +162,7 @@ class TypeChecker(NodeVisitor):
 
     def visit_Init(self, node):
         initType = self.visit(node.expr)
-        if initType == self.actType or (initType == "int" and self.actType == "float"):
+        if initType == self.actType or (initType == "int" and self.actType == "float") or (initType == "float" and self.actType == "int"):
             if self.table.get(node.name) is not None:
                 print "Invalid definition of {} in line: {}. Entity redefined".\
                     format(node.name, node.line)

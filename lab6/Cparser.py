@@ -154,7 +154,7 @@ class Cparser(object):
     def p_compound_instr(self, p):
         """compound_instr : '{' declarations instructions '}' """
         if len(p[2].children) == 0:
-            p[0] = AST.CompoundInstruction(None, p[3])
+            p[0] = AST.CompoundInstruction(p[2], p[3])
         else:
             p[0] = AST.CompoundInstruction(p[2], p[3])
         
@@ -203,13 +203,13 @@ class Cparser(object):
                       | ID '(' error ')' """
         if len(p) == 2:
             p[0] = p[1]
-        elif p[2] == "(" and p[1] != "(":
-            funcName = p[1]
-            args = p[3]
-            p[0] = AST.InvocationExpression(p.lineno(1), funcName, args)
         elif p[1] == "(":
             interior = p[2]
             p[0] = AST.GroupedExpression(interior)
+        elif p[2] == "(":
+            funcName = p[1]
+            args = p[3]
+            p[0] = AST.InvocationExpression(p.lineno(1), funcName, args)
         else:
             lhs = p[1]
             op = p[2]
