@@ -12,11 +12,15 @@ class VariableSymbol(Symbol):
         self.type = type
 
 
-class FunctionSymbol():
-    def __init__(self, name, type, params):
+class FunctionSymbol(Symbol):
+    def __init__(self, name, type, table):
         self.name = name
         self.type = type
-        self.params = params
+        self.params = []
+        self.table = table
+
+    def extractParams(self):
+        self.params = [x.type for x in self.table.entries]
 
 
 class SymbolTable(object):
@@ -32,7 +36,16 @@ class SymbolTable(object):
         if self.entries[name]:
             return self.entries[name]
         else:
-            return self.parent.get(name)
+            return None
+
+    def getGlobal(self, name):
+        if self.get(name) is None:
+            if self.parent is not None:
+                return self.parent.getGlobal(name)
+            else:
+                return None
+        else:
+            return self.get(name)
 
     def getParentScope(self):
         return self.parent
