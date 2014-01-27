@@ -2,7 +2,7 @@ import sys
 import ply.yacc as yacc
 from Cparser import Cparser
 from TypeChecker import TypeChecker
-from lab7.Interpreter import Interpreter
+from Interpreter import Interpreter
 
 
 if __name__ == '__main__':
