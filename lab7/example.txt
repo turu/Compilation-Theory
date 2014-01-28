@@ -7,12 +7,13 @@ int random_ocena(int bound) {
     while (i < bound) {
         i = i + 1;
         ocena = ocena + 1;
-        continue;
+        continue; /* zwrócimy nie 2 dla bound>0 */
         ocena = 2;
     }
     return ocena;
 }
 
+/* bound będzie w kontekście funkcji */
 int closure() {
     float bound = 0.0;
     int tmp = random_ocena(3);
