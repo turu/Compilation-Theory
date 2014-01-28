@@ -55,7 +55,10 @@ class FunctionExpression(Node):
     def __init__(self, retType, name, args, body):
         self.retType = retType
         self.name = name
-        self.args = args
+        if args:
+            self.args = args
+        else:
+            self.args = ArgumentList()
         self.body = body
 
 
@@ -84,7 +87,10 @@ class Declaration(Node):
 class InvocationExpression(Node):
     def __init__(self, line, name, args):
         self.name = name
-        self.args = args
+        if args:
+            self.args = args
+        else :
+            self.args=ExpressionList()
         self.line = line
 
 

@@ -12,11 +12,22 @@ int random_ocena(int bound) {
     return ocena;
 }
 
-int main(int arg) {
-    return 0;
+int closure() {
+    int bound = 0;
+    int tmp = random_ocena(8);
+    return tmp;
 }
 
+int main() {
+    return 0;
+}
+print "2+2=";
 print 2+2;
+print "d=";
 print d;
+print "main()";
 print main(7);
+print "random_ocena(8)";
 print random_ocena(8);
+print "closure()";
+print closure();
