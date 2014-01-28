@@ -19,23 +19,17 @@ class Interpreter(object):
         r1 = node.lhs.accept(self)
         r2 = node.rhs.accept(self)
         return eval("a" + node.op + "b", {"a": r1, "b": r2})
-        # try sth smarter than:
-        # elsif(node.op=='-') ...
-        # if(node.op=='+') return r1+r2
 
-    #!
     @when(AST.GroupedExpression)
     def visit(self, node):
         return node.inerior.accept(self)
 
 
-    #!
+    #! mamy specjalizowane wersje
     #@when(AST.Const)
     #def visit(self, node):
     #    return node.value
 
-    #!
-    # simplistic while loop interpretation
     @when(AST.WhileInstruction)
     def visit(self, node):
         while node.condition.accept(self):
@@ -46,7 +40,6 @@ class Interpreter(object):
             except ContinueException:
                 pass
 
-    #!
     @when(AST.RepeatInstruction)
     def visit(self, node):
         while True:
@@ -59,7 +52,6 @@ class Interpreter(object):
             except ContinueException:
                 pass
 
-    #!
     @when(AST.ChoiceInstruction)
     def visit(self, node):
         if node.condition.accept(self):
@@ -68,26 +60,25 @@ class Interpreter(object):
             return node.alternateAction.accept(self)
 
 
-    #!
     @when(AST.ExpressionList)
     def visit(self, node):
         for child in node.children:
             child.accept(self)
 
-            #!
+
 
     @when(AST.InstructionList)
     def visit(self, node):
         for child in node.children:
             child.accept(self)
 
-    #!
+
     @when(AST.FunctionExpressionList)
     def visit(self, node):
         for child in node.children:
             child.accept(self)
 
-    #!
+
     @when(AST.CompoundInstruction)
     def visit(self, node):
         node.declarations.accept(self)
@@ -96,13 +87,13 @@ class Interpreter(object):
         except BreakException:
             pass
 
-    #!
+
     @when(AST.FunctionExpression)
     def visit(self, node):
         self.memoryStack.peek().put(node.name, node)
 
 
-    #!
+
     @when(AST.InvocationExpression)
     def visit(self, node):
         fun = self.memoryStack.get(node.name)#EXCEPTION
