@@ -54,7 +54,7 @@ class TypeChecker(NodeVisitor):
     def __init__(self):
         self.table = SymbolTable(None, "root")
         self.actType = ""
-        self.isValid = True;
+        self.isValid = True
 
     def visit_Integer(self, node):
         return 'int'

@@ -67,7 +67,7 @@ class FunctionExpressionList(Node):
         self.children = []
 
     def addFunction(self, fundef):
-        self.children.append(fundef)
+        self.children = [fundef] + self.children
 
 
 class DeclarationList(Node):
@@ -89,8 +89,8 @@ class InvocationExpression(Node):
         self.name = name
         if args:
             self.args = args
-        else :
-            self.args=ExpressionList()
+        else:
+            self.args = ExpressionList()
         self.line = line
 
 

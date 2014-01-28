@@ -14,6 +14,7 @@ class Memory:
     def put(self, name, value):  # puts into memory current value of variable <name>
         self.dict[name] = value
 
+
 class MemoryStack:
     def __init__(self, memory=None): # initialize memory stack with memory <memory>
         self.stack = []

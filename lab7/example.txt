@@ -8,7 +8,7 @@ int random_ocena(int bound) {
         i = i + 1;
         ocena = ocena + 1;
         continue;
-        ocena = 2.0;
+        ocena = 2;
     }
     return ocena;
 }

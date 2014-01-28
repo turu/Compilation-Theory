@@ -27,6 +27,6 @@ if __name__ == '__main__':
             ast.accept(Interpreter())
             print "Interpretation finished"
         else:
-            print "Type check failed"
+            sys.stderr.write("Type check failed -> no interpretation")
     else:
-        print "Syntax check failed"
+        sys.stderr.write("Syntax check failed -> no type check & interpretation")
