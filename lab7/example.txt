@@ -22,12 +22,13 @@ int closure() {
 int main() {
     return 0;
 }
+
 print "2+2=";
 print 2+2;
 print "d=";
 print d;
 print "main()";
-print main(7);
+print main();
 print "random_ocena(3)";
 print random_ocena(3);
 print "closure()";

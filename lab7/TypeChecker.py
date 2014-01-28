@@ -136,7 +136,7 @@ class TypeChecker(NodeVisitor):
             self.isValid = False;
             print "Function {} not defined. Line: {}".format(node.name, node.line)
         else:
-            if node.args is None and funDef.params != []:
+            if ((node.args is None and funDef.params != [] ) or len(node.args.children) != len(funDef.params)):
                 self.isValid = False;
                 print "Invalid number of arguments in line {}. Expected {}". \
                     format(node.line, len(funDef.params))
