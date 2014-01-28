@@ -19,11 +19,14 @@ if __name__ == '__main__':
     text = file.read()
 
     ast = parser.parse(text, lexer=Cparser.scanner)
-    print ast
-    typeChecker = TypeChecker()
-    typeChecker.visit(ast)   # or alternatively ast.accept(typeChecker)
-    print "Type checking finished"
-
-    ast.accept(Interpreter())
-    print "Interpretation finished"
-
+    if ast:
+        typeChecker = TypeChecker()
+        typeChecker.visit(ast)   # or alternatively ast.accept(typeChecker)
+        if typeChecker.isValid:
+            print "Type check finished"
+            ast.accept(Interpreter())
+            print "Interpretation finished"
+        else:
+            print "Type check failed"
+    else:
+        print "Syntax check failed"

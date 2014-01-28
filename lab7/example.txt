@@ -6,15 +6,16 @@ int random_ocena(int bound) {
     int i = 0;
     while (i < bound) {
         i = i + 1;
+        ocena = ocena + 1;
         continue;
-        ocena = ocena * ocena;
+        ocena = 2.0;
     }
     return ocena;
 }
 
 int closure() {
-    int bound = 0;
-    int tmp = random_ocena(8);
+    float bound = 0.0;
+    int tmp = random_ocena(3);
     return tmp;
 }
 
@@ -27,7 +28,7 @@ print "d=";
 print d;
 print "main()";
 print main(7);
-print "random_ocena(8)";
-print random_ocena(8);
+print "random_ocena(3)";
+print random_ocena(3);
 print "closure()";
 print closure();

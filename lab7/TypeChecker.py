@@ -54,6 +54,7 @@ class TypeChecker(NodeVisitor):
     def __init__(self):
         self.table = SymbolTable(None, "root")
         self.actType = ""
+        self.isValid = True;
 
     def visit_Integer(self, node):
         return 'int'
@@ -67,6 +68,7 @@ class TypeChecker(NodeVisitor):
     def visit_Variable(self, node):
         definition = self.table.getGlobal(node.name)
         if definition is None:
+            self.isValid = False;
             print "Undefined symbol {} in line {}".format(node.name, node.line)
         else:
             return definition.type
@@ -76,6 +78,7 @@ class TypeChecker(NodeVisitor):
         rhs = self.visit(node.rhs)
         op = node.op
         if ttype[op][lhs][rhs] is None:
+            self.isValid = False;
             print "Bad expression {} in line {}".format(node.op, node.line)
         return ttype[op][lhs][rhs]
 
@@ -83,8 +86,10 @@ class TypeChecker(NodeVisitor):
         definition = self.table.getGlobal(node.id)
         type = self.visit(node.expr)
         if definition is None:
+            self.isValid = False;
             print "Used undefined symbol {} in line {}".format(node.id, node.line)
         elif type != definition.type and (definition.type != "float" and definition != "int"):
+            self.isValid = False;
             print "Bad assignment of {} to {} in line {}.".format(type, definition.type, node.line)
 
     def visit_GroupedExpression(self, node):
@@ -92,6 +97,7 @@ class TypeChecker(NodeVisitor):
 
     def visit_FunctionExpression(self, node):
         if self.table.get(node.name):
+            self.isValid = False;
             print "Function {} already defined. Line: {}".format(node.name, node.line)
         else:
             function = FunctionSymbol(node.name, node.retType, SymbolTable(self.table, node.name))
@@ -119,6 +125,7 @@ class TypeChecker(NodeVisitor):
 
     def visit_Argument(self, node):
         if self.table.get(node.name) is not None:
+            self.isValid = False;
             print "Argument {} already defined. Line: {}".format(node.name, node.line)
         else:
             self.table.put(node.name, VariableSymbol(node.name, node.type))
@@ -126,17 +133,20 @@ class TypeChecker(NodeVisitor):
     def visit_InvocationExpression(self, node):
         funDef = self.table.getGlobal(node.name)
         if funDef is None or not isinstance(funDef, FunctionSymbol):
+            self.isValid = False;
             print "Function {} not defined. Line: {}".format(node.name, node.line)
         else:
             if node.args is None and funDef.params != []:
-                print "Invalid number of arguments in line {}. Expected {}".\
+                self.isValid = False;
+                print "Invalid number of arguments in line {}. Expected {}". \
                     format(node.line, len(funDef.params))
             else:
                 types = [self.visit(x) for x in node.args.children]
                 expectedTypes = funDef.params
                 for actual, expected in zip(types, expectedTypes):
                     if actual != expected and not (actual == "int" and expected == "float"):
-                        print "Mismatching argument types in line {}. Expected {}, got {}".\
+                        self.isValid = False;
+                        print "Mismatching argument types in line {}. Expected {}, got {}". \
                             format(node.line, expected, actual)
             return funDef.type
 
@@ -156,24 +166,29 @@ class TypeChecker(NodeVisitor):
 
     def visit_ReturnInstruction(self, node):
         if self.actFunc is None:
+            self.isValid = False;
             print "Return placed outside of a function in line {}".format(node.line)
         else:
             type = self.visit(node.expression)
             if type != self.actFunc.type and (self.actFunc.type != "float" or type != "int"):
+                self.isValid = False;
                 print "Invalid return type of {} in line {}. Expected {}".format(type, node.line, self.actFunc.type)
 
     def visit_Init(self, node):
         initType = self.visit(node.expr)
-        if initType == self.actType or (initType == "int" and self.actType == "float") or (initType == "float" and self.actType == "int"):
+        if initType == self.actType or (initType == "int" and self.actType == "float") or (
+                    initType == "float" and self.actType == "int"):
             if self.table.get(node.name) is not None:
-                print "Invalid definition of {} in line: {}. Entity redefined".\
+                self.isValid = False;
+                print "Invalid definition of {} in line: {}. Entity redefined". \
                     format(node.name, node.line)
             else:
                 self.table.put(node.name, VariableSymbol(node.name, self.actType))
         else:
+            self.isValid = False;
             print "Bad assignment of {} to {} in line {}".format(initType, self.actType, node.line)
 
-    def visit_Declaration(self,node):
+    def visit_Declaration(self, node):
         self.actType = node.type
         self.visit(node.inits)
         self.actType = ""
