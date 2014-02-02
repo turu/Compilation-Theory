@@ -104,6 +104,8 @@ class Interpreter(object):
             fun.body.accept(self)
         except ReturnValueException as e:
             return e.value
+        finally:
+            self.memoryStack.pop()
 
     @when(AST.Argument)
     def visit(self, node):

@@ -1,5 +1,5 @@
 int a = 0, b = 0, c = 0;
-
+/*
 int fact2(int x) {
     int c = 1, res = 1;
 
@@ -9,7 +9,15 @@ int fact2(int x) {
     until c > x;
     return res;
 }
-
+*/
+int fib(int nth){
+    if(nth <= 1){
+        return 1;
+    } else {
+        return fib(nth-1) + fib(nth-2);
+    }
+}
+/*
 print fact2(6);
 
 
@@ -28,3 +36,10 @@ repeat {
         continue;
     print a;
 } until (a>100);
+*/
+a = 0;
+repeat {
+    a = a + 1;
+    print fib(a);
+} until (a>5);
+
