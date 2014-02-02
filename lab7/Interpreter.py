@@ -22,7 +22,7 @@ class Interpreter(object):
 
     @when(AST.GroupedExpression)
     def visit(self, node):
-        return node.inerior.accept(self)
+        return node.interior.accept(self)
 
 
     #! mamy specjalizowane wersje
@@ -44,7 +44,7 @@ class Interpreter(object):
     def visit(self, node):
         while True:
             try:
-                node.instruction.accept(self)
+                node.instructions.accept(self)
                 if node.condition.accept(self):
                     break
             except BreakException:
@@ -56,9 +56,10 @@ class Interpreter(object):
     def visit(self, node):
         if node.condition.accept(self):
             return node.action.accept(self)
-        else:
+        elif node.alternateAction:
             return node.alternateAction.accept(self)
-
+        else:
+            pass
 
     @when(AST.ExpressionList)
     def visit(self, node):
@@ -82,10 +83,8 @@ class Interpreter(object):
     @when(AST.CompoundInstruction)
     def visit(self, node):
         node.declarations.accept(self)
-        try:
-            node.instructions.accept(self)
-        except BreakException:
-            pass
+        node.instructions.accept(self)
+
 
 
     @when(AST.FunctionExpression)

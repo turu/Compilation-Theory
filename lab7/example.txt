@@ -1,36 +1,30 @@
-int d = 2;
-int e = d + 2;
+int a = 0, b = 0, c = 0;
 
-int random_ocena(int bound) {
-    int ocena = 2;
-    int i = 0;
-    while (i < bound) {
-        i = i + 1;
-        ocena = ocena + 1;
-        continue; /* zwrócimy nie 2 dla bound>0 */
-        ocena = 2;
-    }
-    return ocena;
+int fact2(int x) {
+    int c = 1, res = 1;
+
+    repeat
+        res = res * c;
+        c = c + 1;
+    until c > x;
+    return res;
 }
 
-/* bound będzie w kontekście funkcji */
-int closure() {
-    float bound = 0.0;
-    int tmp = random_ocena(3);
-    return tmp;
+print fact2(6);
+
+
+while(a < 100 ) {
+    if(a==15)
+        break;
+    print a;
+    a = a + 1;
 }
 
-int main() {
-    return 0;
-}
+a = 0;
 
-print "2+2=";
-print 2+2;
-print "d=";
-print d;
-print "main()";
-print main();
-print "random_ocena(3)";
-print random_ocena(3);
-print "closure()";
-print closure();
+repeat {
+    a = a + 1;
+    if(a%5!=0)
+        continue;
+    print a;
+} until (a>100);
